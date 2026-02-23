@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note App - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+
+<header class="dash-header">
+    <h2 id="welcomeText">My Notes</h2>
+    <button id="logoutBtn" class="btn logout-btn">Logout</button>
+</header>
+
+<div class="dash-container">
+    <div class="login-box add-note-box">
+        <form id="noteForm">
+            <div class="form-group">
+                <input type="text" id="noteTitle" placeholder="Note Title" required>
+            </div>
+            <div class="form-group">
+                <textarea id="noteContent" placeholder="Write your note here..." required rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn">Save Note</button>
+        </form>
+    </div>
+
+    <div id="notesGrid" class="notes-grid">
+    </div>
+</div>
+
+<script>
+    // 1. Authentication Check
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        window.location.href = '/login.html'; // Kick out unauthenticated users
+    }
+
+    // Optional: Greet the user
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+        document.getElementById('welcomeText').textContent = `Notes for ${userEmail}`;
+    }
+
+    // 2. Fetch Notes Function
+    async function loadNotes() {
+        try {
+            const response = await fetch('/notes', {
+                headers: { 'Authorization': token } // Attaching the token!
+            });
+            if (response.ok) {
+                const notes = await response.json();
+                displayNotes(notes);
+            } else if (response.status === 401) {
+                // Token is invalid or expired
+                logout();
+            }
+        } catch (error) {
+            console.error("Failed to fetch notes", error);
+        }
+    }
+
+   // 3. Display Notes Function (Updated with Delete Button)
+    function displayNotes(notes) {
+        const grid = document.getElementById('notesGrid');
+        grid.innerHTML = ''; // Clear current notes
+        notes.forEach(note => {
+            const card = document.createElement('div');
+            card.className = 'note-card';
+            // Notice the new delete button at the bottom!
+            card.innerHTML = `
+                <h3>${note.title}</h3>
+                <p>${note.content}</p>
+                <button class="btn delete-btn" onclick="deleteNote(${note.id})">Delete</button>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // New Function: Delete Note
+    async function deleteNote(noteId) {
+        // Add a quick confirmation popup so users don't delete by accident
+        if (!confirm("Are you sure you want to delete this note?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/notes/${noteId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': token } // Send the token!
+            });
+
+            if (response.ok) {
+                loadNotes(); // Reload the notes grid so the deleted note vanishes
+            } else {
+                alert("Failed to delete note.");
+            }
+        } catch (error) {
+            console.error("Error deleting note:", error);
+        }
+    }
+
+    // 4. Save New Note
+    document.getElementById('noteForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('noteTitle').value;
+        const content = document.getElementById('noteContent').value;
+
+        try {
+            const response = await fetch('/notes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token // Attaching the token!
+                },
+                body: JSON.stringify({ title, content })
+            });
+
+            if (response.ok) {
+                document.getElementById('noteForm').reset(); // Clear the form
+                loadNotes(); // Reload the list to show the new note
+            }
+        } catch (error) {
+            console.error("Failed to save note", error);
+        }
+    });
+
+    // 5. Logout Function
+    function logout() {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userEmail');
+        window.location.href = '/';
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+
+    // Initial load
+    loadNotes();
+</script>
+</body>
+</html>

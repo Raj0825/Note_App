@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #5568d3;
+}
+
+#message {
+    text-align: center;
+    margin-top: 15px;
+    color: #d32f2f;
+}
+
+/* Dashboard Specific Styles */
+.dashboard-body {
+    display: block; /* Override the flex centering from login */
+    padding-top: 20px;
+}
+
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    color: white;
+    padding: 0 20px;
+}
+
+.logout-btn {
+    width: auto;
+    padding: 8px 16px;
+    background: #d32f2f;
+}
+
+.logout-btn:hover {
+    background: #b71c1c;
+}
+
+.dash-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.add-note-box {
+    margin-bottom: 30px;
+}
+
+.add-note-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+}
+
+.add-note-box textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+}
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding-bottom: 40px;
+}
+
+.note-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.note-card h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.note-card p {
+    color: #666;
+    line-height: 1.5;
+    white-space: pre-wrap; /* Keeps line breaks from the textarea */
+}
+/* Delete Button Styles */
+.delete-btn {
+    background-color: #ff5252;
+    margin-top: 15px;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: auto; /* Overrides the 100% width from the default .btn class */
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}

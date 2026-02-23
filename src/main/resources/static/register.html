@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note App - Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="login-box">
+        <h1>Sign Up</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <p id="regMessage" style="text-align: center; margin-top: 15px;"></p>
+        <p style="text-align: center; margin-top: 15px; font-size: 14px;">
+            Already have an account? <a href="index.html" style="color: #667eea; text-decoration: none; font-weight: bold;">Login here</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const msgEl = document.getElementById('regMessage');
+
+        try {
+            // Hitting your public Spring Boot endpoint
+            const response = await fetch('/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            if (response.ok) {
+                msgEl.textContent = 'Account created successfully!';
+                msgEl.style.color = '#4caf50';
+                setTimeout(() => window.location.href = '/', 1500);
+            } else {
+                msgEl.textContent = 'Registration failed. Email might be in use.';
+                msgEl.style.color = '#d32f2f';
+            }
+        } catch (error) {
+            msgEl.textContent = 'Server error. Please try again.';
+            console.error(error);
+        }
+    });
+</script>
+</body>
+</html>
