@@ -43,8 +43,4 @@ spring.jpa.hibernate.ddl-auto=update
 
 
 
-Method,Endpoint,Description,Authorization
-POST,/auth/register,Registers a new user entity.,None
-GET,/notes,Fetches all notes associated with the authenticated principal.,Basic Auth
-POST,/notes,Persists a new note entity to the database.,Basic Auth
-DELETE,/notes/{id},Deletes a specified note entity.,Basic Auth
+
