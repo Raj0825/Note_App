@@ -10,7 +10,7 @@ A highly scalable, cloud-native RESTful API built with Java and Spring Boot. Thi
 ## 🔗 Infrastructure & Environments
 - **Production API URL:** `https://note-app-1-tnpi.onrender.com`
 - **Database Hosting:** Aiven Cloud Services
-- **Client Application:** [Insert Client Repository URL]
+- **Client Application:** https://raj0825.github.io/Note_App-Frontend-/
 
 ## 🏗️ System Architecture & Technologies
 - **Core Framework:** Spring Boot (Spring Web, Spring Boot Starter)
