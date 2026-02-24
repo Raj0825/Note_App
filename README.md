@@ -39,3 +39,16 @@ spring.datasource.url=${DB_URL}
 spring.datasource.username=${DB_USERNAME}
 spring.datasource.password=${DB_PASSWORD}
 spring.jpa.hibernate.ddl-auto=update
+
+
+git clone:
+[https://github.com/yourusername/your-backend-repo.git](https://github.com/yourusername/your-backend-repo.git)
+cd your-backend-repo
+mvn clean install
+mvn spring-boot:run
+
+Method,Endpoint,Description,Authorization
+POST,/auth/register,Registers a new user entity.,None
+GET,/notes,Fetches all notes associated with the authenticated principal.,Basic Auth
+POST,/notes,Persists a new note entity to the database.,Basic Auth
+DELETE,/notes/{id},Deletes a specified note entity.,Basic Auth
