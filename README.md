@@ -8,7 +8,7 @@
 A highly scalable, cloud-native RESTful API built with Java and Spring Boot. This service acts as the decoupled backend for a note-taking application, handling secure user authentication, state management, and data persistence via a remote MySQL cluster.
 
 ## 🔗 Infrastructure & Environments
-- **Production API URL:** `https://note-app-1-tnpi.onrender.com`
+- **Production API URL:** https://note-app-1-tnpi.onrender.com
 - **Database Hosting:** Aiven Cloud Services
 - **Client Application:** https://raj0825.github.io/Note_App-Frontend-/
 
