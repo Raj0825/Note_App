@@ -6,7 +6,9 @@ import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 @RestController
@@ -54,5 +56,25 @@ public class NoteController {
 
         return service.updateNote(id, request.getTitle(), request.getContent(), authentication.getName());
     }
+
+    @PutMapping("/{id}")
+public ResponseEntity<?> updateNote(@PathVariable Long id, @RequestBody Note noteDetails) {
+    try {
+        // 1. Find the existing note in the database
+        Note existingNote = noteRepository.findById(id).orElseThrow(() -> new RuntimeException("Note not found"));
+        
+        // 2. Update the fields with the new data from the frontend
+        existingNote.setTitle(noteDetails.getTitle());
+        existingNote.setContent(noteDetails.getContent());
+        
+        // 3. Save it back to the database
+        Note savedNote = noteRepository.save(existingNote);
+        
+        return ResponseEntity.ok(savedNote);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body("Failed to update note");
+    }
+}
+
 
 }
